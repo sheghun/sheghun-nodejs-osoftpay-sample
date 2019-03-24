@@ -1,0 +1,42 @@
+html
+  head
+    title= title
+    link(rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous")
+  body
+    h1(style="text-align: center; margin-top: 10vh;") #{message}
+    .row
+        .col-md-6.offset-md-3
+            form#form(method="post" action=formAction)
+                .form-group
+                    .p-3
+                        #errors.alert.alert-danger
+                    label(for="customerName") Customer name
+                    input(name="CustomerName" id="customerName" class="form-control" type="text")
+                .form-group
+                    label(for="email") Email
+                    input(name="CustomerId" id="customerId" class="form-control" type="email" placeholder="emailxxxxx@gmail.com")
+                button(type="button" id="button" class="btn btn-primary") Submit
+                // Hidden inputs
+                input(name="TransactionType" type="hidden" value=transactionType)
+                input(name="MerchantNumber" type="hidden" value=merchantNumber)
+                input(name="SiteRedirectURL" type="hidden" value=siteRedirectURL)
+                input(name="TransactionReference" type="hidden" value=transactionReference)
+                input(name="PaymentItemName" type="hidden" value=paymentItemName)
+                input(name="Hash" type="hidden" value=hash)
+                input(name="Amount" type="hidden" value=amount)
+
+    script.
+        const form = document.getElementById("form")
+        const customerName = document.getElementById("customerName")
+        const customerId = document.getElementById("customerId")
+        const button = document.getElementById("button")
+        const errors = document.getElementById("errors")
+        errors.style.display = "none"
+        button.addEventListener("click", (e) => {
+            if((customerName.value || customerId.value) === "") {
+                errors.innerText = "All inputs must be filled"
+                errors.style.display = "block"
+            } else {
+                form.submit()
+            }
+        })
